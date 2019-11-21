@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +17,20 @@
 <script src='packages/timegrid/main.js'></script>
 
 <!-- O Slim exclui os efeitos então tirei o slim do link e funcionou. Não precisei pegar o jquery do google<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-<script src="js/calendar.js"></script>
 
 </head>
 <body>
-
+<?php
+  if(isset( $_SESSION['msg'])){
+    echo $_SESSION['msg'];
+    unset($_SESSION['msg']);
+  }
+?>
 <div id='calendar'></div>
 
 <!-- Modal Visualizar-->
@@ -76,11 +83,11 @@
         </button>
       </div>
       <div class="modal-body">
-          <span id="msg-cad"></span>
-
-          <form id="addevent" method="POST" enctype="multipart/form-data">
-          
+      <span id="msg-cad"></span>
+          <form id="addevent" name="addevent" method="POST" enctype="multipart/form-data">
+      
             <div class="form-group row">
+            
               <label class="col-sm-2 col-form-label">Title:</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" name="title" id="title" placeholder="title">
@@ -114,6 +121,8 @@
             </div>
 
             <div class="form-group row">
+
+            <!-- <input type="submit" id="CadEvent" name="CadEvent" value="CadEvent" class="btn btn-success"> -->
               <button type="submit" id="CadEvent" name="CadEvent" value="CadEvent" class="btn btn-success">Cadastrar</button>
             </div>
           </form>
@@ -123,5 +132,6 @@
   </div>
 </div>
 
+<script src="js/calendar.js"></script>
 </body>
 </html>

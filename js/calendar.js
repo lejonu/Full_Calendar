@@ -1,52 +1,76 @@
-document.addEventListener('DOMContentLoaded', function() {
-var calendarEl = document.getElementById('calendar');
+document.addEventListener('DOMContentLoaded', ()=> 
+{
+  var calendarEl = document.getElementById('calendar');
 
-var calendar = new FullCalendar.Calendar(calendarEl, {
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    locale: 'pt-br',
     plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
     header: {
-    left: 'prev,next today',
-    center: 'title',
-    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    locale: 'pt-br',
-    // defaultDate: '2019-08-12',
+    // defaultDate: new Date(),
     navLinks: true, // can click day/week names to navigate views
-    selectable: true,
-    selectMirror: true,
-    select: ( info )=>
-    {  
-        $('#cadastrar #start').val(info.start.toLocaleString())
-        $('#cadastrar #end').val(info.end.toLocaleString())
-
-        $('#cadastrar').modal('show')
-        calendar.unselect()
-    },
     editable: true,
     eventLimit: true, // allow "more" link when too many events
     events: 'events_list.php',
     extraParams: ()=>
     {
-    return 
-    {
+      return {
         cachebuster: new Date().valueOf()
-    }
+      }
     },
     eventClick: ( info )=>
     {
-    info.jsEvent.preventDefault()
+      info.jsEvent.preventDefault();
 
-    $('#visualizar #id').text(info.event.id)
-    $('#visualizar #title').text(info.event.title)
-    $('#visualizar #color').text(info.event.color)
-    $('#visualizar #start').text(info.event.start.toLocaleString())
-    $('#visualizar #end').text(info.event.start.toLocaleString())
-
-
-    $('#visualizar').modal('show')
+      $('#visualizar #id').text(info.event.id);
+      $('#visualizar #title').text(info.event.title);
+      $('#visualizar #color').text(info.event.color);
+      $('#visualizar #start').text(info.event.start.toLocaleString());
+      $('#visualizar #end').text(info.event.end.toLocaleString());
+      $('#visualizar').modal('show')
+    },
+    selectable: true,
+    // selectMirror: true,
+    select: ( info )=> 
+    {
+      $('#cadastrar #start').val(info.start.toLocaleString())
+      $('#cadastrar #end').val(info.end.toLocaleString())
+      $('#cadastrar').modal('show')
+      calendar.unselect()
     }
-    })
+  });
+  calendar.render();
+});
 
-calendar.render()
+$(document).ready(function()
+{
+  $("#addevent").on("submit", function( event )
+  {
+    event.preventDefault()
+
+    $.ajax({
+      method: "POST",
+      url: "event_cad.php",
+      data: new FormData( this ),
+      contentType: false,
+      processData: false,
+      success: function( retorna )     
+      {
+        if( retorna['sit'] )
+        {
+            location.reload()
+        }
+        else
+        {
+          $('#msg-cad').html(retorna['msg']);
+        }
+      }
+    });
+  });
+
 })
 
 function DataHora(evento, objeto)
