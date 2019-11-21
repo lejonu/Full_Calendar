@@ -26,7 +26,7 @@
 
 <div id='calendar'></div>
 
-<!-- Modal -->
+<!-- Modal Visualizar-->
 <div class="modal fade" id="visualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -59,6 +59,64 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-primary">Salvar mudanças</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cadastrar-->
+<div class="modal fade" id="cadastrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Evento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <span id="msg-cad"></span>
+
+          <form id="addevent" method="POST" enctype="multipart/form-data">
+          
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Title:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" id="title" placeholder="title">
+              </div>
+            </div>
+          
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Color:</label>
+              <div class="col-sm-10">
+                <select name="color" id="color" class="form-control form-control-lg">
+                  <option value="">Selecione</option>
+                  <option value="#000000">Preto</option>
+                  <option value="#ffffff">Branco</option>
+                  <option value="#0071c5">Azul Turquesa</option>
+                </select>
+              </div>
+            </div>
+          
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Start</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="start" id="start"  onkeypress="DataHora(event, this)">
+              </div>
+            </div>
+          
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">End</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="end" id="end" onkeypress="DataHora(event, this)">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <button type="submit" id="CadEvent" name="CadEvent" value="CadEvent" class="btn btn-success">Cadastrar</button>
+            </div>
+          </form>
       </div>
 
     </div>
