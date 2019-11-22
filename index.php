@@ -44,31 +44,69 @@ session_start();
         </button>
       </div>
 
-      <div class="modal-body">
-        <div class="row">
-          <dt class="col-sm-3">ID do evento:</dt>
-          <dd class="col-sm-9" id="id"></dd>
+<!-- Modal View-Edit -->
+<div class="modal-body">
 
-          <dt class="col-sm-3">Title:</dt>
-          <dd class="col-sm-9" id="title"></dd>
+  <div class="view-event">
+    <dl class="row">
+      <dt class="col-sm-3">ID do evento:</dt>
+      <dd class="col-sm-9" id="id"></dd>
 
-          <dt class="col-sm-3">Color:</dt>
-          <dd class="col-sm-9" id="color"></dd>
+      <dt class="col-sm-3">Title:</dt>
+      <dd class="col-sm-9" id="title"></dd>
 
-          <dt class="col-sm-3">Start:</dt>
-          <dd class="col-sm-9" id="start"></dd>
+      <dt class="col-sm-3">Color:</dt>
+      <dd class="col-sm-9"><input type="color" id="color" name="color" value="#ff0000"></dd>
+      
+      <dt class="col-sm-3">Start:</dt>
+      <dd class="col-sm-9" id="start"></dd>
 
-          <dt class="col-sm-3">End:</dt>
-          <dd class="col-sm-9" id="end"></dd>
+      <dt class="col-sm-3">End:</dt>
+      <dd class="col-sm-9" id="end"></dd>
+    </dl>
+    <button class="btn btn-warning btn-cancel-view">Editar</button>
+  </div>
+
+  <div class="form-edit">
+    <form id="editevent" name="editevent" method="POST" enctype="multipart/form-data">            
+      <input type="hidden"  name="id" id="id" placeholder="id">
+
+      <div class="form-group row">                
+        <label class="col-sm-2 col-form-label">Title:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="title" id="title" placeholder="title">
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Color:</label>
+        <div class="col-sm-10">
+          Select your favorite color: 
+          <input type="color" id="color" name="color" value="#ff0000"><br><br>
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Start</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="start" id="start"  onkeypress="DataHora(event, this)">
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">End</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="end" id="end" onkeypress="DataHora(event, this)">
         </div>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar mudanças</button>
-      </div>
-
-    </div>
+      <div class="form-group row">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cancel-edit">Cancel</button>
+          <button type="submit" id="EditEvent" name="EditEvent" value="EditEvent" class="btn btn-success">Save Changes</button>
+        </div>
+      </div>  
+    </form>
   </div>
 </div>
 
@@ -97,12 +135,14 @@ session_start();
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Color:</label>
               <div class="col-sm-10">
-                <select name="color" id="color" class="form-control form-control-lg">
+              Select your favorite color: 
+              <input type="color" id="color" name="color" value="#ff0000"><br><br>
+                <!-- <select name="color" id="color" class="form-control form-control-lg">
                   <option value="">Selecione</option>
                   <option value="#000000">Preto</option>
                   <option value="#ffffff">Branco</option>
                   <option value="#0071c5">Azul Turquesa</option>
-                </select>
+                </select> -->
               </div>
             </div>
           

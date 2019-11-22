@@ -9,3 +9,11 @@ font-size: 14px;
 max-width: 900px;
 margin: 0 auto;
 }
+
+.view-event {
+    display: block
+}
+
+.form-edit {
+    display: none;
+}

@@ -27,9 +27,18 @@ document.addEventListener('DOMContentLoaded', ()=>
 
       $('#visualizar #id').text(info.event.id);
       $('#visualizar #title').text(info.event.title);
+      $('#visualizar #title').text(info.event.title);
       $('#visualizar #color').text(info.event.color);
       $('#visualizar #start').text(info.event.start.toLocaleString());
       $('#visualizar #end').text(info.event.end.toLocaleString());
+
+      // send data to form editor
+      $('#visualizar #id').val(info.event.id);
+      $('#visualizar #title').val(info.event.title);
+      $('#visualizar #title').val(info.event.title);
+      $('#visualizar #color').val(info.event.backgroundColor);
+      $('#visualizar #start').val(info.event.start.toLocaleString());
+      $('#visualizar #end').val(info.event.end.toLocaleString());
       $('#visualizar').modal('show')
     },
     selectable: true,
@@ -68,8 +77,38 @@ $(document).ready(function()
           $('#msg-cad').html(retorna['msg']);
         }
       }
-    });
-  });
+    })
+  })
+
+  $(".btn-cancel-view, .cancel-edit").on("click", function()
+  {
+    $(".view-event").slideToggle();
+    $(".form-edit").slideToggle();
+  })
+
+  $("#editevent").on("submit", function( event )
+  {
+    event.preventDefault()
+
+    $.ajax({
+      method: "POST",
+      url: "event_edit.php",
+      data: new FormData( this ),
+      contentType: false,
+      processData: false,
+      success: function( retorna )     
+      {
+        if( retorna['sit'] )
+        {
+            location.reload()
+        }
+        else
+        {
+          $('#msg-cad-edit').html(retorna['msg']);
+        }
+      }
+    })
+  })
 
 })
 
